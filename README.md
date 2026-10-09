@@ -79,7 +79,8 @@ graph TD
 
 When the measured power factor ($	ext{PF}_1$) is below target ($	ext{PF}_2 = 0.95$):
 1. **Reactive Power Deficit:**
-   $$Q_{	ext{comp}} = P \cdot \left(	an(rccos(	ext{PF}_1)) - 	an(rccos(	ext{PF}_2))ight)$$
+   $$Q_{	ext{comp}} = P \cdot \left(	an(rccos(	ext{PF}_1)) - 	an(rccos(	ext{PF}_2))
+ight)$$
 2. **Required Capacitance (for inductive lagging loads):**
    $$C = rac{Q_{	ext{comp}}}{2 \pi f V^2} 	imes 10^6 \ \mu	ext{F}$$
 3. **Required Inductance (for capacitive leading loads):**
@@ -165,11 +166,11 @@ const char *mqtt_broker = "YOUR_BROKER_HOST";
 
 - **Author:** [saptarshi2007 (saptarshidas578)](https://github.com/saptarshidas578)
 - **Institution:** B.Tech Electrical & Computer Science Engineering, VIT Vellore
-- **LinkedIn:** TODO(author): add link
+- **LinkedIn:** https://www.linkedin.com/in/saptarshi-das-3255673a1/
 
 ---
 
 ## License
 
-Recommended: [MIT License](https://opensource.org/licenses/MIT).  
-*TODO(author): confirm license selection.*
+[MIT License](https://opensource.org/licenses/MIT).  
+
