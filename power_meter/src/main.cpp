@@ -1,3 +1,24 @@
+/**
+ * ====================================================================================================
+ * @file main.cpp
+ * @brief ESP32 Smart IoT Power Meter & Automated Power Factor Correction Calculator
+ * @author saptarshi2007 (https://github.com/saptarshidas578)
+ * 
+ * @details
+ * Interfaces an ESP32 microcontroller with a PZEM-004T v1 energy sensor to measure AC electrical
+ * parameters (RMS Voltage, Current, Active Power, Frequency, and Power Factor) in real time.
+ * Calculates necessary reactive compensation (Capacitance in uF for inductive lag, Inductance in H
+ * for capacitive lead) to attain target Power Factor (0.95). Renders live diagnostics on an SPI
+ * SSD1306 OLED display and publishes encrypted JSON telemetry over MQTTS (TLS 8883) to EMQX cloud.
+ * 
+ * Hardware Peripherals:
+ * - ESP32 DevKit V1 (Xtensa dual-core 32-bit LX6 @ 240 MHz)
+ * - PZEM-004T v1 AC Digital Multimeter Sensor (UART2: RX=GPIO 16, TX=GPIO 17)
+ * - SSD1306 128x64 SPI OLED Display: MOSI=21, CLK=19, DC=18, CS=23, RESET=5
+ * - Status Indicator LED: GPIO 2
+ * ====================================================================================================
+ */
+
 #include <Arduino.h>
 #include <SPI.h>
 #include <Wire.h>
@@ -67,8 +88,21 @@ MrY=
 )EOF";
 
 // Function declarations
+/**
+ * @brief Connects ESP32 to 2.4 GHz Wi-Fi access point with live OLED status updates.
+ * @details Retries connection at 500 ms intervals until connected, then reports local IP on OLED.
+ */
 void connectToWiFi();
+/**
+ * @brief Establishes secure TLS/SSL MQTTS session with cloud broker (EMQX).
+ * @details Validates broker certificate using bundled DigiCert root CA over port 8883,
+ *          subscribes to device telemetry topic, and publishes welcome handshake.
+ */
 void connectToMQTT();
+/**
+ * @brief Synchronizes ESP32 internal clock with pool.ntp.org over UDP.
+ * @details Configures timezone offset for India Standard Time (IST UTC+5:30) without daylight savings.
+ */
 void syncTime();
 String getTimeString();
 
@@ -99,6 +133,10 @@ String getTimeString() {
 }
 
 //Function to connect to WIFI
+/**
+ * @brief Connects ESP32 to 2.4 GHz Wi-Fi access point with live OLED status updates.
+ * @details Retries connection at 500 ms intervals until connected, then reports local IP on OLED.
+ */
 void connectToWiFi() {
     Serial.print("Connecting to WiFi");
     display.clearDisplay();
@@ -121,6 +159,10 @@ void connectToWiFi() {
 }
 
 //Configure ans syncronize time with automatic DST handling
+/**
+ * @brief Synchronizes ESP32 internal clock with pool.ntp.org over UDP.
+ * @details Configures timezone offset for India Standard Time (IST UTC+5:30) without daylight savings.
+ */
 void syncTime() {
 
     // Configure time with automatic DST handling
@@ -157,6 +199,11 @@ void syncTime() {
 }
 
 //Setup MQTT connection and publish welcome message
+/**
+ * @brief Establishes secure TLS/SSL MQTTS session with cloud broker (EMQX).
+ * @details Validates broker certificate using bundled DigiCert root CA over port 8883,
+ *          subscribes to device telemetry topic, and publishes welcome handshake.
+ */
 void connectToMQTT() {
     // Configure SSL certificate
     espClient.setCACert(ca_cert);  // ESP32 method, different from ESP8266
@@ -201,6 +248,18 @@ void connectToMQTT() {
     }
 }
 
+/**
+ * @brief Serializes electrical sensor measurements into structured JSON payload.
+ * @param voltage Measured RMS AC voltage in Volts (V).
+ * @param current Measured AC load current in Amperes (A).
+ * @param power Active power in Watts (W).
+ * @param frequency Mains electrical frequency in Hertz (Hz).
+ * @param powerFactor Ratio of real power to apparent power (0.000 to 1.000).
+ * @param L_henry Calculated inductance required in Henrys (H) for capacitive correction.
+ * @param C_uF Calculated capacitance required in microfarads (uF) for inductive correction.
+ * @param Correct Boolean indicating whether power factor meets or exceeds target (0.95).
+ * @return Formatted JSON string ready for MQTT transmission.
+ */
 String formatPZEMData(float voltage, float current, float power, 
                       float frequency, float powerFactor, 
                       float L_henry, float C_uF, bool Correct) {
@@ -221,6 +280,11 @@ String formatPZEMData(float voltage, float current, float power,
 }
 
 
+/**
+ * @brief Hardware peripheral and communication initialization lifecycle hook.
+ * @details Initializes Serial (115200), PZEM UART2 (9600), SPI SSD1306 OLED, status LED,
+ *          connects to Wi-Fi, synchronizes NTP time, and connects to secure MQTT broker.
+ */
 void setup() {
   Serial.begin(115200);
   delay(1000); 
@@ -256,6 +320,12 @@ void setup() {
   delay(1000);
 }
 
+/**
+ * @brief Primary superloop executed continuously on Core 1.
+ * @details Polls PZEM-004T for voltage, current, power, frequency, and power factor.
+ *          Computes required reactive compensation (VAR, uF, H) against target PF (0.95).
+ *          Updates OLED graphic dashboard and publishes telemetry packet over secure MQTT.
+ */
 void loop() {
   // Read PZEM data
   float voltage = pzem.readVoltage();
