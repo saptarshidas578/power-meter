@@ -111,8 +111,7 @@ ight)$$
 ```
 power-meter/
 ├── README.md                   # System documentation and hardware specs
-└── power_meter/
-    ├── .vscode/
+└──     ├── .vscode/
     │   └── extensions.json     # Recommended VS Code extensions
     ├── include/
     │   └── README              # Header directory guidance
@@ -138,7 +137,7 @@ power-meter/
 ```bash
 # Clone the repository
 git clone https://github.com/saptarshidas578/power-meter.git
-cd power-meter/power_meter
+cd power-meter
 
 # Build firmware
 pio run -e esp32dev
@@ -151,7 +150,7 @@ pio run -e esp32dev -t monitor -b 115200
 ```
 
 ### Configuration Notes
-*Set your local Wi-Fi SSID, password, and MQTT credentials in `power_meter/src/main.cpp`:*
+*Set your local Wi-Fi SSID, password, and MQTT credentials in `src/main.cpp`:*
 ```cpp
 const char *ssid = "YOUR_WIFI_SSID";
 const char *password = "YOUR_WIFI_PASSWORD";
