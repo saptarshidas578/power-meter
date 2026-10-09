@@ -79,7 +79,8 @@ graph TD
 
 When the measured power factor ($	ext{PF}_1$) is below target ($	ext{PF}_2 = 0.95$):
 1. **Reactive Power Deficit:**
-   $$Q_{	ext{comp}} = P \cdot \left(	an(rccos(	ext{PF}_1)) - 	an(rccos(	ext{PF}_2))ight)$$
+   $$Q_{	ext{comp}} = P \cdot \left(	an(rccos(	ext{PF}_1)) - 	an(rccos(	ext{PF}_2))
+ight)$$
 2. **Required Capacitance (for inductive lagging loads):**
    $$C = rac{Q_{	ext{comp}}}{2 \pi f V^2} 	imes 10^6 \ \mu	ext{F}$$
 3. **Required Inductance (for capacitive leading loads):**
@@ -104,8 +105,7 @@ When the measured power factor ($	ext{PF}_1$) is below target ($	ext{PF}_2 = 0.9
 ```
 power-meter/
 ├── README.md                   # System documentation and hardware specs
-└── power_meter/
-    ├── .vscode/
+└──     ├── .vscode/
     │   └── extensions.json     # Recommended VS Code extensions
     ├── include/
     │   └── README              # Header directory guidance
@@ -131,7 +131,7 @@ power-meter/
 ```bash
 # Clone the repository
 git clone https://github.com/saptarshidas578/power-meter.git
-cd power-meter/power_meter
+cd power-meter
 
 # Build firmware
 pio run -e esp32dev
@@ -144,7 +144,7 @@ pio run -e esp32dev -t monitor -b 115200
 ```
 
 ### Configuration Notes
-*Set your local Wi-Fi SSID, password, and MQTT credentials in `power_meter/src/main.cpp`:*
+*Set your local Wi-Fi SSID, password, and MQTT credentials in `src/main.cpp`:*
 ```cpp
 const char *ssid = "YOUR_WIFI_SSID";
 const char *password = "YOUR_WIFI_PASSWORD";
