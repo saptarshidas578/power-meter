@@ -13,6 +13,12 @@ An embedded IoT electrical energy monitoring and automated power factor correcti
 
 The ESP32 IoT Smart Power Meter is an embedded electrical measurement and telemetry platform that monitors single-phase alternating current (AC) power parameters in real time. Built around the ESP32 microcontroller and a PZEM-004T v1 power monitoring transducer, the device measures RMS voltage, RMS current, active power, line frequency, and power factor. An onboard analytical engine continuously calculates reactive power deficit and specifies required capacitance (in microfarads) or inductance (in Henrys) to bring lagging or leading power factor up to target (0.95). Electrical diagnostics are rendered locally on a 128x64 SPI OLED display and transmitted periodically via TLS-encrypted MQTT (port 8883) to an EMQX cloud broker for remote monitoring.
 
+<p align="center">
+  <img src="docs/images/hardware_prototype_telemetry.jpg" alt="ESP32 Smart Power Meter Hardware Prototype and Real-Time Telemetry" width="850"/>
+  <br>
+  <em><strong>Figure 1:</strong> Physical hardware prototype bench setup (ESP32 DevKit, PZEM-004T AC energy transducer, SSD1306 SPI OLED display, isolated AC-DC converter, and split-core current transformer) alongside live MQTT telemetry reception displaying automated power factor correction calculations.</em>
+</p>
+
 ---
 
 ## Features

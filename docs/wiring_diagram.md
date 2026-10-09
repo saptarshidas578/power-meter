@@ -16,3 +16,11 @@
 ## AC Mains High-Voltage Warnings
 - PZEM-004T measures 80-260V AC. Ensure split-core current transformer (CT) is installed around a single phase conductor (not both live and neutral).
 - Maintain optical isolation between high-voltage AC terminals and ESP32 low-voltage logic.
+
+## Prototype & Telemetry Verification
+
+<p align="center">
+  <img src="images/hardware_prototype_telemetry.jpg" alt="ESP32 Smart Power Meter Prototype and Telemetry" width="800"/>
+  <br>
+  <em>Physical hardware bench prototype and real-time MQTT telemetry receiving live electrical telemetry and calculating power factor correction parameters.</em>
+</p>
