@@ -13,6 +13,12 @@ An embedded IoT electrical energy monitoring and automated power factor correcti
 
 The ESP32 IoT Smart Power Meter is an embedded electrical measurement and telemetry platform that monitors single-phase alternating current (AC) power parameters in real time. Built around the ESP32 microcontroller and a PZEM-004T v1 power monitoring transducer, the device measures RMS voltage, RMS current, active power, line frequency, and power factor. An onboard analytical engine continuously calculates reactive power deficit and specifies required capacitance (in microfarads) or inductance (in Henrys) to bring lagging or leading power factor up to target (0.95). Electrical diagnostics are rendered locally on a 128x64 SPI OLED display and transmitted periodically via TLS-encrypted MQTT (port 8883) to an EMQX cloud broker for remote monitoring.
 
+<p align="center">
+  <img src="docs/images/hardware_prototype_telemetry.jpg" alt="ESP32 Smart Power Meter Hardware Prototype and Real-Time Telemetry" width="850"/>
+  <br>
+  <em><strong>Figure 1:</strong> Physical hardware prototype bench setup (ESP32 DevKit, PZEM-004T AC energy transducer, SSD1306 SPI OLED display, isolated AC-DC converter, and split-core current transformer) alongside live MQTT telemetry reception displaying automated power factor correction calculations.</em>
+</p>
+
 ---
 
 ## Features
@@ -105,8 +111,7 @@ ight)$$
 ```
 power-meter/
 ├── README.md                   # System documentation and hardware specs
-└── power_meter/
-    ├── .vscode/
+└──     ├── .vscode/
     │   └── extensions.json     # Recommended VS Code extensions
     ├── include/
     │   └── README              # Header directory guidance
@@ -132,7 +137,7 @@ power-meter/
 ```bash
 # Clone the repository
 git clone https://github.com/saptarshidas578/power-meter.git
-cd power-meter/power_meter
+cd power-meter
 
 # Build firmware
 pio run -e esp32dev
@@ -145,7 +150,7 @@ pio run -e esp32dev -t monitor -b 115200
 ```
 
 ### Configuration Notes
-*Set your local Wi-Fi SSID, password, and MQTT credentials in `power_meter/src/main.cpp`:*
+*Set your local Wi-Fi SSID, password, and MQTT credentials in `src/main.cpp`:*
 ```cpp
 const char *ssid = "YOUR_WIFI_SSID";
 const char *password = "YOUR_WIFI_PASSWORD";
@@ -166,11 +171,11 @@ const char *mqtt_broker = "YOUR_BROKER_HOST";
 
 - **Author:** [saptarshi2007 (saptarshidas578)](https://github.com/saptarshidas578)
 - **Institution:** B.Tech Electrical & Computer Science Engineering, VIT Vellore
-- **LinkedIn:** https://www.linkedin.com/in/saptarshi-das-3255673a1/
+- **LinkedIn:** TODO(author): add link
 
 ---
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT).  
-
+Recommended: [MIT License](https://opensource.org/licenses/MIT).  
+*TODO(author): confirm license selection.*
